@@ -8,6 +8,14 @@ public class News {
     public News(String generalNews, String departmentNews){
         this.generalNews = generalNews;
         this.departmentNews = departmentNews;
+
     }
 
+    public String getDepartmentNews() {
+        return departmentNews;
+    }
+
+    public String getGeneralNews() {
+        return generalNews;
+    }
 }
