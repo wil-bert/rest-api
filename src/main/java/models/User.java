@@ -17,4 +17,20 @@ public class User {
     public String getName() {
         return name;
     }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public int getId() {
+        return id;
+    }
 }
