@@ -13,4 +13,8 @@ public class User {
         this.role = role;
         this.department = department;
     }
+
+    public String getName() {
+        return name;
+    }
 }
