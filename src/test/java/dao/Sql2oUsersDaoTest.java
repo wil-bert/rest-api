@@ -37,8 +37,8 @@ public class Sql2oUsersDaoTest {
 
     @Test
     public void getAll() throws Exception {
-        User user1 = setUpUser();
-        User user2 = setUpUser();
+        User users1 = setUpUser();
+        User users2 = setUpUser();
         assertEquals(2, usersDao.getAll().size());
     }
 
@@ -46,9 +46,9 @@ public class Sql2oUsersDaoTest {
     public void getAllUsersByDepartment() throws Exception {
         Departments testDepartments = setUpDepartments();
         Departments otherDepartments = setUpDepartments();
-        User user1 = setUpUserForDepartments(testDepartments);
-        User user2 = setUpUserForDepartments(testDepartments);
-        User userForOtherDepartments = setUpUserForDepartments(otherDepartments);
+        User users1 = setUpUserForDepartments(testDepartments);
+        User users2 = setUpUserForDepartments(testDepartments);
+        User usersForOtherDepartments = setUpUserForDepartments(otherDepartments);
         assertEquals(2, usersDao.getAllUsersByDepartment(testDepartments.getId()).size());
 
     }
@@ -56,7 +56,7 @@ public class Sql2oUsersDaoTest {
     @Test
     public void deleteById() throws  Exception {
         User testUser = setUpUser();
-        User otherUser = setUpUser();
+        User otherUsers = setUpUser();
         assertEquals(2, usersDao.getAll().size());
         usersDao.deleteById(testUser.getId());
         assertEquals(1, usersDao.getAll().size());

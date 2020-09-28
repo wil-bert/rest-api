@@ -3,11 +3,11 @@ package models;
 import java.util.Objects;
 
 public class User {
+    private static int id;
     private String name;
     private String position;
     private String role;
     private String department;
-    private int id;
 
     public User(String name, String position, String role, String department){
         this.name = name;
@@ -37,7 +37,7 @@ public class User {
     }
 
     public void setId(int id) {
-        this.id = id;
+        User.id = id;
     }
 
     public void setName(String name) {
@@ -54,6 +54,23 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return id == User.id &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(position, user.position) &&
+                Objects.equals(role, user.role) &&
+                Objects.equals(department, user.department);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, position, role, department, id);
     }
 
 }
