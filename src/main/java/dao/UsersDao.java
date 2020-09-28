@@ -8,7 +8,7 @@ public interface UsersDao {
     void add(User user);
 
     List<User> getAll();
-    List<User> getAllUsersByDepartment(int departmentId);
+    List<User> getAllUsersByDepartment(String department);
 
     void deleteById(int id);
     void clearAll();
