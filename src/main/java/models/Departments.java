@@ -30,7 +30,7 @@ public class Departments {
         return departmentId;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

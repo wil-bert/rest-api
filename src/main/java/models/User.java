@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Objects;
+
 public class User {
     private String name;
     private String position;
@@ -37,4 +39,21 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
 }

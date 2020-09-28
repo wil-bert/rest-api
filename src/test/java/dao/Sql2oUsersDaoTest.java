@@ -10,7 +10,7 @@ import org.sql2o.Sql2o;
 
 import static org.junit.Assert.*;
 
-public class SqlUsersDaoTest {
+public class Sql2oUsersDaoTest {
     private Connection conn;
     private Sql2oUsersDao usersDao;
     private Sql2oDepartmentsDao departmentsDao;
@@ -51,6 +51,15 @@ public class SqlUsersDaoTest {
         User userForOtherDepartments = setUpUserForDepartments(otherDepartments);
         assertEquals(2, usersDao.getAllUsersByDepartment(testDepartments.getId()).size());
 
+    }
+
+    @Test
+    public void deleteById() throws  Exception {
+        User testUser = setUpUser();
+        User otherUser = setUpUser();
+        assertEquals(2, usersDao.getAll().size());
+        usersDao.deleteById(testUser.getId());
+        assertEquals(1, usersDao.getAll().size());
     }
 
     private User setUpUserForDepartments(Departments testDepartments) {

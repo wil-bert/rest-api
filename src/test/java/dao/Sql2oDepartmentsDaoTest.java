@@ -2,6 +2,6 @@ package dao;
 
 import static org.junit.Assert.*;
 
-public class SqlDepartmentsDaoTest {
+public class Sql2oDepartmentsDaoTest {
 
 }
