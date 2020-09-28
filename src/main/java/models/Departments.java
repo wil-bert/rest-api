@@ -35,4 +35,7 @@ public class Departments {
     }
 
 
+    public int setId(int id) {
+        return id;
+    }
 }
