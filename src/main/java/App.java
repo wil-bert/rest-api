@@ -26,7 +26,14 @@ public class App {
 
         staticFileLocation("/public");
 
+        usersDao = new Sql2oUsersDao(sql2o);
+        departmentsDao = new Sql2oDepartmentsDao(sql2o);
 
-        post("/department/:");
+
+
+        post("/user/:department/departments/:departmentId", ((request, response) -> {
+
+            String department = new String(request.params("department"));
+        }));
     }
 }
