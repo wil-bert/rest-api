@@ -1,5 +1,6 @@
 package models;
 
+import java.awt.*;
 import java.util.Objects;
 
 public class User {
@@ -60,12 +61,12 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return id == User.id &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(position, user.position) &&
-                Objects.equals(role, user.role) &&
-                Objects.equals(department, user.department);
+        User that = (User) o;
+        return id == that.id &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(position, that.position) &&
+                Objects.equals(role, that.role) &&
+                Objects.equals(department, that.department);
     }
 
     @Override
