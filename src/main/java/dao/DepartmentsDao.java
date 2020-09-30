@@ -19,7 +19,7 @@ public interface DepartmentsDao {
     // List<user> getAllUsersForADepartment(int departmentId);
 
     //update
-    void update(int id, String name, String about, String website, String email);
+    void update(int id, String departmentName, String description, int numberOfEmployees, int departmentId);
 
     //delete
     void deleteById(int id);
