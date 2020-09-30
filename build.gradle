@@ -19,4 +19,5 @@ dependencies {
     compile group: 'org.sql2o', name: 'sql2o', version: '1.5.4'
     compile group: 'com.h2database', name: 'h2', version: '1.4.191'
     compile 'com.google.code.gson:gson:2.8.6'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.2' // ADD ME FOR POSTGRES VERSION 10.x
 }

@@ -34,8 +34,8 @@ public class App {
         Gson gson = new Gson();
         staticFileLocation("/public");
 
-        String connectionString = "jdbc:postgresql://localhost:5432/organisational_news_portal";
-        Sql2o sql2o = new Sql2o(connectionString, "jediel", "lovineoduor1");
+        String connectionString = "jdbc:postgresql://ec2-54-146-142-58.compute-1.amazonaws.com:5432/ddnageq80rihq9";
+        Sql2o sql2o = new Sql2o(connectionString, "dapaybtyrcslxz", "31868a7f3fb0385f607fd10598c1a6bd71a911e05160a233b24e71c5dada9ac4");
         sql2oDepartmentsDao=new Sql2oDepartmentsDao(sql2o);
         sql2oNewsDao=new Sql2oNewsDao(sql2o);
         sql2oUsersDao=new Sql2oUsersDao(sql2o);
@@ -192,12 +192,11 @@ public class App {
 
         //FILTERS
         exception(ApiException.class, (exception, request, response) -> {
-            ApiException err = exception;
             Map<String, Object> jsonMap = new HashMap<>();
-            jsonMap.put("status", err.getStatusCode());
-            jsonMap.put("errorMessage", err.getMessage());
+            jsonMap.put("status", exception.getStatusCode());
+            jsonMap.put("errorMessage", exception.getMessage());
             response.type("application/json");
-            response.status(err.getStatusCode());
+            response.status(exception.getStatusCode());
             response.body(gson.toJson(jsonMap));
         });
 
