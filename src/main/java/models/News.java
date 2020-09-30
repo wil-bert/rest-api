@@ -1,23 +1,29 @@
 package models;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class News {
-    public int id;
-    public String title;
-    public String content;
-    public int departmentId;
+    private String headline;
+    private String content;
+    private String author;
+    private int id;
+    private int departmentid; //will be used to connect Department to News (one-to-many)
 
-    public News(String title, String content){
-        this.title = title;
+    public News(String headline, String content, String author, int departmentid) {
+        this.headline = headline;
         this.content = content;
+        this.author = author;
+        this.departmentid = departmentid;
+        //we'll make me in a minute
     }
 
-    public News(String title, String content, int departmentId){
-        this.title = title;
-        this.content = content;
-        this.departmentId = departmentId;
-    }
+    //Create comparison
+
+
+
+    //Hashcode n equals override
+
 
     @Override
     public boolean equals(Object o) {
@@ -25,26 +31,26 @@ public class News {
         if (!(o instanceof News)) return false;
         News news = (News) o;
         return id == news.id &&
-                departmentId == news.departmentId &&
-                Objects.equals(title, news.title) &&
-                Objects.equals(content, news.content);
+                departmentid == news.departmentid &&
+                Objects.equals(headline, news.headline) &&
+                Objects.equals(content, news.content) &&
+                Objects.equals(author, news.author);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, content, departmentId);
+        return Objects.hash(headline, content, author, id, departmentid);
     }
 
-    public int getId() {
-        return id;
+    //Getters
+
+
+    public String getHeadline() {
+        return headline;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
+    public String getAuthor() {
+        return author;
     }
 
     public String getContent() {
@@ -52,20 +58,36 @@ public class News {
     }
 
 
-    public int getDepartmentId() {
-        return departmentId;
+    public int getId() {
+        return id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public int getdepartmentid() {
+        return departmentid;
     }
+
+
+    //Setters
 
     public void setContent(String content) {
         this.content = content;
     }
 
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
+    public void setHeadline(String headline) {
+        this.headline = headline;
     }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setdepartmentid(int departmentid) {
+        this.departmentid = departmentid;
+    }
+
 
 }

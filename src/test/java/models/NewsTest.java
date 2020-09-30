@@ -16,21 +16,21 @@ public class NewsTest {
     public void teardown() throws Exception {
     }
 
-    @Test
-    public void getGeneralNews() {
-        News testNews = setupGeneralNews();
-        assertEquals("Headlines", testNews.getGeneralNews());
-    }
-
-    @Test
-    public void getDepartmentNews() {
-        News testNews = setupGeneralNews();
-        assertEquals("Emergency", testNews.getDepartmentNews());
-    }
-
-    private News setupGeneralNews() {
-        return new News("Headlines", "Emergency");
-    }
-
+//    @Test
+//    public void getGeneralNews() {
+//        News testNews = setupGeneralNews();
+//        assertEquals("Headlines", testNews.getGeneralNews());
+//    }
+//
+//    @Test
+//    public void getDepartmentNews() {
+//        News testNews = setupGeneralNews();
+//        assertEquals("Emergency", testNews.getDepartmentNews());
+//    }
+//
+//    private News setupGeneralNews() {
+//        return new News("Headlines", "Emergency");
+//    }
+//
 
 }
