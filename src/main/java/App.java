@@ -35,7 +35,7 @@ public class App {
         staticFileLocation("/public");
 
         String connectionString = "jdbc:postgresql://localhost:5432/organisational_news_portal";
-        Sql2o sql2o = new Sql2o(connectionString, "", "");
+        Sql2o sql2o = new Sql2o(connectionString, "jediel", "lovineoduor1");
         sql2oDepartmentsDao=new Sql2oDepartmentsDao(sql2o);
         sql2oNewsDao=new Sql2oNewsDao(sql2o);
         sql2oUsersDao=new Sql2oUsersDao(sql2o);
@@ -57,10 +57,10 @@ public class App {
         //adding users to a specific department
         post("/add/user/:user_id/department/:department_id","application/json",(request, response) -> {
 
-            int userId=Integer.parseInt(request.params("userId"));
-            int departmentId=Integer.parseInt(request.params("departmentId"));
-            Departments departments=sql2oDepartmentsDao.findById(int departmentId);
-            User users=sql2oUsersDao.getAllUsersByDepartment(int departmentId);
+            int user_id=Integer.parseInt(request.params("user_id"));
+            int department_id=Integer.parseInt(request.params("department_id"));
+            Departments departments=sql2oDepartmentsDao.findById(department_id);
+            User users=sql2oUsersDao.findById(user_id);
             if(departments==null){
                 throw new ApiException(404, String.format("No department with the id: \"%s\" exists",
                         request.params("department_id")));
@@ -69,7 +69,7 @@ public class App {
                 throw new ApiException(404, String.format("No user with the id: \"%s\" exists",
                         request.params("user_id")));
             }
-            sql2oDepartmentsDao.getAllUsersByDepartment(users, departments);
+            sql2oDepartmentsDao.addUserToDepartment(users,departments);
 
             List<User> departmentUsers=sql2oDepartmentsDao.getAllUsersInDepartment(departments.getId());
 
@@ -80,7 +80,7 @@ public class App {
         post("/news/new/department","application/json",(request, response) -> {
             News department_news =gson.fromJson(request.body(),News.class);
             Departments departments=sql2oDepartmentsDao.findById(department_news.getDepartment_id());
-            Users users=sql2oUsersDao.findById(department_news.getUser_id());
+            User users=sql2oUsersDao.findById(department_news.getUser_id());
             if(departments==null){
                 throw new ApiException(404, String.format("No department with the id: \"%s\" exists",
                         request.params("id")));

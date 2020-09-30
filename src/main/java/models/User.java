@@ -1,20 +1,24 @@
 package models;
 
-import java.awt.*;
 import java.util.Objects;
 
 public class User {
-    private static int id;
-    private String name;
-    private String position;
-    private String role;
-    private String department;
 
-    public User(String name, String position, String role, String department){
+    private int id;
+    private  String name;
+    private String position;
+    private String staff_role;
+
+
+    public User(String name, String position, String staff_role) {
         this.name = name;
         this.position = position;
-        this.role = role;
-        this.department = department;
+        this.staff_role = staff_role;
+
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -25,53 +29,28 @@ public class User {
         return position;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public int getId() {
-        return id;
+    public String getStaff_role() {
+        return staff_role;
     }
 
     public void setId(int id) {
-        User.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+        this.id = id;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User that = (User) o;
-        return id == that.id &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(position, that.position) &&
-                Objects.equals(role, that.role) &&
-                Objects.equals(department, that.department);
+        if (o == null || getClass() != o.getClass()) return false;
+        User users = (User) o;
+        return id == users.id &&
+                Objects.equals(name, users.name) &&
+                Objects.equals(position, users.position) &&
+                Objects.equals(staff_role, users.staff_role) ;
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, position, role, department, id);
+        return Objects.hash(id, name, position, staff_role);
     }
-
 }

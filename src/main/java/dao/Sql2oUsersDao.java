@@ -1,7 +1,7 @@
 package dao;
 
-import models.User;
 import models.Departments;
+import models.User;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sql2oUsersDao implements UsersDao {
+
     private final Sql2o sql2o;
 
     public Sql2oUsersDao(Sql2o sql2o) {
@@ -18,69 +19,77 @@ public class Sql2oUsersDao implements UsersDao {
 
     @Override
     public void add(User user) {
-        String sql = "INSERT INTO users (name, position, role, department) VALUES (:name, :position, :role, :department)";
-        try (Connection con = sql2o.open()){
-            int id = (int) con.createQuery(sql,true)
+        try (Connection con=sql2o.open()){
+            String sql ="INSERT INTO staff (name,position,staff_role) VALUES (:name,:position,:staff_role) ";
+
+            int id=(int) con.createQuery(sql,true)
                     .bind(user)
                     .executeUpdate()
                     .getKey();
             user.setId(id);
-        } catch (Sql2oException ex) {
-            System.out.println(ex);
+
+
+        }catch (Sql2oException e){
+            System.out.println(e);
         }
 
     }
 
     @Override
     public List<User> getAll() {
-        try (Connection con = sql2o.open()){
-            return con.createQuery("SELECT * FROM users")
+        try (Connection con=sql2o.open()){
+            String sql=("SELECT * FROM staff");
+            return con.createQuery(sql)
                     .executeAndFetch(User.class);
-
         }
     }
 
     @Override
-    public List<Departments> getAllUsersByDepartment(int departmentId) {
-        List<Departments> deparmentName = new ArrayList();
-        String joinQuery = "SELECT departmentname FROM department WHERE departmentid = :departmentid";
+    public List<Departments> getAllUserDepartments(int user_id) {
+        List<Departments> departments=new ArrayList<>();
+        try (Connection con=sql2o.open()) {
+            String sql = "SELECT department_id FROM users_departments WHERE user_id=:user_id";
+            List<Integer> departmentIds = con.createQuery(sql)
+                    .addParameter("user_id", user_id)
+                    .executeAndFetch(Integer.class);
 
-        try (Connection con = sql2o.open()){
-            List<String> allDepartmentNames = con.createQuery(joinQuery)
-                    .addParameter("departmentId", departmentId)
-                    .executeAndFetch(String.class);
-            for (String departmentName : allDepartmentNames){
-                String departmentnameQuery = "SELECT * FROM department WHERE departmentname = :departmentname";
-                deparmentName.add(
-                        con.createQuery(departmentnameQuery)
-                        .addParameter("departmentName",departmentName)
+            for (Integer id : departmentIds) {
+                String userResults = "SELECT * FROM departments WHERE id=:id";
+                departments.add(con.createQuery(userResults)
+                        .addParameter("id", id)
                         .executeAndFetchFirst(Departments.class));
+
             }
-        } catch (Sql2oException ex) {
-            System.out.println(ex);
+
+            return departments;
         }
-        return deparmentName;
     }
 
     @Override
-    public void deleteById(int id) {
-        String sql = "DELETE from users WHERE id= :id";
-        try (Connection con = sql2o.open()){
-            con.createQuery(sql)
-                    .addParameter("id", id)
-                    .executeUpdate();
-        } catch (Sql2oException ex) {
-            System.out.println(ex);
+    public User findById(int id) {
+        try (Connection con=sql2o.open()){
+            String sql=("SELECT * FROM staff WHERE id=:id");
+            return con.createQuery(sql)
+                    .addParameter("id",id)
+                    .executeAndFetchFirst(User.class);
         }
     }
+
 
     @Override
     public void clearAll() {
-        String sql = "DELETE from users";
-        try (Connection con = sql2o.open()){
+
+        try (Connection con=sql2o.open()){
+            String sql ="DELETE FROM staff ";
             con.createQuery(sql).executeUpdate();
-        } catch (Sql2oException ex) {
-            System.out.println(ex);
+            String sqlUsersDepartments="DELETE FROM users_departments";
+            con.createQuery(sqlUsersDepartments).executeUpdate();
+
+
+        }catch (Sql2oException e){
+            System.out.println(e);
         }
+
+
     }
 }

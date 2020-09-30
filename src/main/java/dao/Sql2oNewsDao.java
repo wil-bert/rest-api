@@ -1,6 +1,6 @@
 package dao;
 
-import models.Departments;
+import models.DepartmentNews;
 import models.News;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -9,78 +9,82 @@ import org.sql2o.Sql2oException;
 import java.util.List;
 
 public class Sql2oNewsDao implements NewsDao {
-
     private final Sql2o sql2o;
-    public Sql2oNewsDao(Sql2o sql2o) { this.sql2o = sql2o; }
+
+    public Sql2oNewsDao(Sql2o sql2o) {
+        this.sql2o = sql2o;
+    }
 
     @Override
-    public void add(NewsDao news) {
-        String sql = "INSERT INTO news (headline, content, author, departmentid, createdat, formattedCreatedAt) VALUES (:headline, :content, :author, :departmentid, :createdat, :formattedCreatedAt)"; //if you change your model, be sure to update here as well!
+    public void addNews(News news) {
         try (Connection con = sql2o.open()) {
+            String sql = "INSERT INTO news (news_type,department_id,user_id,title,description) VALUES (:news_type," +
+                    ":department_id,:user_id,:title,:description)";
             int id = (int) con.createQuery(sql, true)
                     .bind(news)
                     .executeUpdate()
                     .getKey();
             news.setId(id);
-        } catch (Sql2oException ex) {
-            System.out.println(ex);
+
+        } catch (Sql2oException e) {
+            System.out.println(e);
         }
 
+
+    }
+
+    @Override
+    public void addDepartmentNews(DepartmentNews department_news) {
+        try (Connection con = sql2o.open()) {
+            String sql = "INSERT INTO news (news_type,department_id,user_id,title,description) VALUES (:news_type," +
+                    ":department_id,:user_id,:title,:description)";
+            int id = (int) con.createQuery(sql, true)
+                    .bind(department_news)
+                    .executeUpdate()
+                    .getKey();
+            department_news.setId(id);
+
+        } catch (Sql2oException e) {
+            System.out.println(e);
         }
+
+    }
 
     @Override
     public List<News> getAll() {
         try (Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM news")
+            String sql = "SELECT * FROM news";
+            return con.createQuery(sql, true)
                     .executeAndFetch(News.class);
+
         }
     }
 
-    @Override
-    public List<News> getAllNewsByDepartment(int departmentid) {
-        try (Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM news WHERE departmentid = :departmentid")
-                    .addParameter("departmentid", departmentid)
-                    .executeAndFetch(News.class);
-        }
-    }
 
     @Override
-    public void deleteById(int id) {
-        String sql = "DELETE from news WHERE id = :id";
-        String deleteJoin = "DELETE from department_news WHERE newsid = :newsid";
+    public News findById(int id) {
         try (Connection con = sql2o.open()) {
-            con.createQuery(sql)
+            String sql = "SELECT * FROM news WHERE id=:id";
+            return con.createQuery(sql)
                     .addParameter("id", id)
-                    .executeUpdate();
-            con.createQuery(deleteJoin)
-                    .addParameter("news", id)
-                    .executeUpdate();
-
-        } catch (Sql2oException ex){
-            System.out.println(ex);
+                    .executeAndFetchFirst(News.class);
         }
 
     }
 
     @Override
     public void clearAll() {
-        String sql = "DELETE FROM news";
-        try(Connection conn = sql2o.open()){
-            conn.createQuery(sql)
-                    .executeUpdate();
-        }catch (Error error){
-            throw error;
+        try (Connection con = sql2o.open()) {
+            String sql = "DELETE FROM departments";
+            String sqlNews = "DELETE FROM news";
+            String sqlUsersDepartments = "DELETE FROM users_departments";
+            con.createQuery(sql).executeUpdate();
+            con.createQuery(sqlUsersDepartments).executeUpdate();
+            con.createQuery(sqlNews).executeUpdate();
+
+        } catch (Sql2oException e) {
+            System.out.println(e);
         }
 
-    }
-
-    @Override
-    public void setId(int id) {
-
-    }
-
-
-    public void addNewsToDepartment(News news, Departments departments){
     }
 }

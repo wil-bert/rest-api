@@ -2,34 +2,37 @@ SET MODE PostgreSQL;
 
 CREATE DATABASE news;
 \c news;
-CREATE TABLE users (
-id int PRIMARY KEY auto_increment,
+CREATE TABLE departments (
+id SERIAL PRIMARY KEY,
+name VARCHAR,
+description VARCHAR,
+size int
+);
+
+CREATE TABLE news (
+id SERIAL PRIMARY KEY,
+news_type VARCHAR,
+department_id INT,
+user_id INT,
+title VARCHAR,
+description VARCHAR
+);
+
+CREATE TABLE staff (
+id SERIAL PRIMARY KEY,
 name VARCHAR,
 position VARCHAR,
-role VARCHAR,
-department VARCHAR
+staff_role VARCHAR
 );
 
-CREATE TABLE department (
-id int PRIMARY KEY auto_increment,
-departmentname VARCHAR,
-description VARCHAR,
-numberofemployees INTEGER,
-departmentid INTEGER
-);
-
-CREATE TABLE  news (
-id int PRIMARY KEY auto_increment,
-type VARCHAR,
-title VARCHAR,
-departmentid int
-);
-
-CREATE TABLE department_users(
+CREATE TABLE users_departments (
 id SERIAL PRIMARY KEY,
-userid INTEGER,
-departmentid INTEGER);
+user_id INT,
+department_id INT
+);
+
+
+
+
 
 CREATE DATABASE news_test WITH TEMPLATE news;
-
-

@@ -1,41 +1,57 @@
 package models;
 
+import java.util.Objects;
+
 public class Departments {
-    private String departmentName;
+
+    private String name;
     private String description;
-    private int numberOfEmployees;
-    private int departmentId;
     private int id;
+    private int size;
 
-    public Departments(String departmentName,String description, int numberOfEmployees, int departmentId){
-        this.departmentName = departmentName;
+
+
+    public Departments(String name, String description) {
+        this.name = name;
         this.description = description;
-        this.numberOfEmployees = numberOfEmployees;
-        this.departmentId = departmentId;
+        this.size=0;
     }
-
-    public String getDepartmentName() {
-        return departmentName;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public int getNumberOfEmployees() {
-        return numberOfEmployees;
+    public int getSize() {
+        return size;
     }
 
-    public int getDepartmentId() {
-        return departmentId;
+    public void setSize(int size) {
+        this.size = size;
     }
+
+    public String getName() {
+        return name;
+    }
+
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public int setId(int id) {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Departments that = (Departments) o;
+        return id == that.id &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, id);
     }
 }
