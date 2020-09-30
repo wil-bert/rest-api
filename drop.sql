@@ -1,0 +1,2 @@
+DROP DATABASE news;
+DROP DATABASE news_test;
