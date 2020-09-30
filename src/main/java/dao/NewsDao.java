@@ -7,7 +7,7 @@ public interface NewsDao {
 
     void add(News news);
 
-    List<News> getAll();
+    List<News> findNewsByDepartmentId();
 
     void deleteById(int id);
     void clearAll();

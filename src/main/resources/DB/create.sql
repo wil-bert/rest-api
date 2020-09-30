@@ -18,6 +18,7 @@ departmentid INTEGER
 
 CREATE TABLE IF NOT EXISTS news (
 id int PRIMARY KEY auto_increment,
-generalnews VARCHAR,
-departmentnews VARCHAR
+type VARCHAR,
+title VARCHAR,
+departmentid int
 );
